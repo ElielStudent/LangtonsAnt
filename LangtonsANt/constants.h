@@ -2,7 +2,9 @@
 
 #define WIDTH 1000
 #define HEIGHT 1000
-#define GRIDWIDTH (WIDTH/100)
-#define GRIDHEIGHT (HEIGHT/100)
+#define NUMOFX 40
+#define NUMOFY 40
+#define GRIDWIDTH (WIDTH/NUMOFX)
+#define GRIDHEIGHT (HEIGHT/NUMOFY)
 
 #define antPic "ant.png"

@@ -1,13 +1,16 @@
 #include "Ant.h"
 
 Ant::Ant() {
-	position.x = WIDTH / 2;
-	position.y = HEIGHT / 2;
-	antS.setPosition(this->position.x, this->position.y);
+	position.x = GRIDWIDTH * (WIDTH / GRIDWIDTH / 2);
+	position.y = GRIDHEIGHT * (HEIGHT / GRIDHEIGHT / 2);
 	direction = 3;
 
 	antT.loadFromFile(antPic);
 	antS.setTexture(antT);
+
+	antS.setOrigin(antT.getSize().x / 2, antT.getSize().y / 2);
+	antS.setPosition(this->position.x, this->position.y);
+	antS.setRotation(direction * 90);
 
 	float xScale = float(GRIDWIDTH) / float(antT.getSize().x);
 	float yScale = float(GRIDHEIGHT) / float(antT.getSize().y);
@@ -15,17 +18,14 @@ Ant::Ant() {
 }
 
 void Ant::Move(int grid[HEIGHT / GRIDHEIGHT][WIDTH / GRIDWIDTH]) {
-
 	GetDirection(grid);
 	grid[position.y / GRIDHEIGHT][position.x / GRIDWIDTH] = !grid[position.y / GRIDHEIGHT][position.x / GRIDWIDTH];
 	if (direction == 0) this->position.y -= GRIDHEIGHT;
 	else if (direction == 2) this->position.y += GRIDHEIGHT;
 	else if (direction == 1) this->position.x += GRIDWIDTH;
 	else if (direction == 3) this->position.x -= GRIDWIDTH;
-	//this->position += { ((direction / 2 * 2 - 1)* (direction % 2))* GRIDWIDTH,
-	//	(direction - 1 * (direction % 2 == 0))* GRIDHEIGHT}; //1 x++ | 3 x--  ||  0 y-- | 2 y++
+	antS.setPosition(this->position.x + GRIDWIDTH/2 , this->position.y + GRIDHEIGHT/2);
 	antS.setRotation(direction * 90);
-	antS.setPosition(this->position.x, this->position.y);
 }
 
 void Ant::GetDirection(int grid[HEIGHT / GRIDHEIGHT][WIDTH / GRIDWIDTH]) {
